@@ -14,13 +14,13 @@ export class Adventurer extends ex.Actor {
       acc: new ex.Vector(0, 400),
     });
 
-    this.body.collider.on('collisionstart', () => {
+    this.body.collider.on("collisionstart", () => {
       this.onFloor = true;
     });
 
-    this.body.collider.on('collisionend', () => {
+    this.body.collider.on("collisionend", () => {
       this.onFloor = false;
-    })
+    });
   }
 
   public update(engine: ex.Engine, delta: number) {
@@ -30,10 +30,18 @@ export class Adventurer extends ex.Actor {
     }
 
     if (engine.input.keyboard.isHeld(ex.Input.Keys.Left)) {
-      this.acc = new ex.Vector(-1000, this.acc.y);
+      if (this.onFloor) {
+        this.acc = new ex.Vector(-1000, this.acc.y);
+      } else {
+        this.acc = new ex.Vector(-200, this.acc.y)
+      }
     } else if (engine.input.keyboard.isHeld(ex.Input.Keys.Right)) {
-      this.acc = new ex.Vector(1000, this.acc.y);
-    } else {
+      if (this.onFloor) {
+        this.acc = new ex.Vector(1000, this.acc.y);
+      } else {
+        this.acc = new ex.Vector(200, this.acc.y);
+      }
+    } else if (this.onFloor) {
       this.acc.x = 0;
       this.vel.x = 0;
     }
