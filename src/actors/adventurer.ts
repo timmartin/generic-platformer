@@ -19,6 +19,17 @@ export class Adventurer extends ex.Actor {
       this.acc = new ex.Vector(0, 400);
     }
 
+    if (engine.input.keyboard.isHeld(ex.Input.Keys.Left)) {
+      this.acc = new ex.Vector(-800, this.acc.y);
+    } else if (engine.input.keyboard.isHeld(ex.Input.Keys.Right)) {
+      this.acc = new ex.Vector(800, this.acc.y);
+    } else {
+      this.acc.x = 0;
+    }
+
+    this.vel.x = Math.min(200, this.vel.x);
+    this.vel.x = Math.max(-200, this.vel.x);
+
     return super.update(engine, delta);
   }
 }
