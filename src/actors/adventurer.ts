@@ -8,6 +8,8 @@ export class Adventurer extends ex.Actor {
       color: ex.Color.Violet,
       width: 40,
       height: 60,
+      collisionType: ex.CollisionType.Active,
+      acc: new ex.Vector(0, 400),
     });
   }
 }
