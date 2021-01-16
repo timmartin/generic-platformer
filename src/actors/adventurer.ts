@@ -12,4 +12,13 @@ export class Adventurer extends ex.Actor {
       acc: new ex.Vector(0, 400),
     });
   }
+
+  public update(engine: ex.Engine, delta: number) {
+    if (engine.input.keyboard.isHeld(ex.Input.Keys.Space)) {
+      this.vel = new ex.Vector(0, -400);
+      this.acc = new ex.Vector(0, 400);
+    }
+
+    return super.update(engine, delta);
+  }
 }
