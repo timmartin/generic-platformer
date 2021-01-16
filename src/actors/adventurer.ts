@@ -1,6 +1,8 @@
 import * as ex from "excalibur";
 
 export class Adventurer extends ex.Actor {
+  private onFloor: boolean = false;
+
   constructor(engine: ex.Engine) {
     super({
       x: engine.drawWidth / 2,
@@ -11,10 +13,18 @@ export class Adventurer extends ex.Actor {
       collisionType: ex.CollisionType.Active,
       acc: new ex.Vector(0, 400),
     });
+
+    this.body.collider.on('collisionstart', () => {
+      this.onFloor = true;
+    });
+
+    this.body.collider.on('collisionend', () => {
+      this.onFloor = false;
+    })
   }
 
   public update(engine: ex.Engine, delta: number) {
-    if (engine.input.keyboard.isHeld(ex.Input.Keys.Space)) {
+    if (this.onFloor && engine.input.keyboard.isHeld(ex.Input.Keys.Space)) {
       this.vel = new ex.Vector(this.vel.x, -400);
       this.acc = new ex.Vector(this.acc.x, 400);
     }
