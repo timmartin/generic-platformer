@@ -3,6 +3,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: "./src/main.ts",
+  mode: "development",
   devtool: 'source-map',
   devServer: {
     contentBase: "./dist",
