@@ -37,3 +37,5 @@ export class Adventurer extends ex.Actor {
 That <code>acc: new ex.Vector(0, 400)</code> is doing all the work: it's a constant acceleration
 downwards (positive Y is downwards in our world, which models gravity pretty accurately. Combined
 with the collision type, the player will fall down and hit the floor.
+
+![Player falling](../video/player_falling.mp4)
