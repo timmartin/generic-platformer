@@ -1,5 +1,7 @@
 import * as ex from "excalibur";
 
+import { Resources } from "../resources";
+
 export class Adventurer extends ex.Actor {
   private onFloor: boolean = false;
 
@@ -8,8 +10,8 @@ export class Adventurer extends ex.Actor {
       x: engine.drawWidth / 2,
       y: engine.drawHeight / 2,
       color: ex.Color.Violet,
-      width: 40,
-      height: 60,
+      width: 66,
+      height: 92,
       collisionType: ex.CollisionType.Active,
       acc: new ex.Vector(0, 400),
     });
@@ -21,6 +23,8 @@ export class Adventurer extends ex.Actor {
     this.body.collider.on("collisionend", () => {
       this.onFloor = false;
     });
+
+    this.addDrawing(Resources.playerFront);
   }
 
   public update(engine: ex.Engine, delta: number) {
@@ -33,7 +37,7 @@ export class Adventurer extends ex.Actor {
       if (this.onFloor) {
         this.acc = new ex.Vector(-1000, this.acc.y);
       } else {
-        this.acc = new ex.Vector(-200, this.acc.y)
+        this.acc = new ex.Vector(-200, this.acc.y);
       }
     } else if (engine.input.keyboard.isHeld(ex.Input.Keys.Right)) {
       if (this.onFloor) {

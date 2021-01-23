@@ -10,6 +10,6 @@ export class Game extends ex.Scene {
     this.add(new Floor(engine));
     this.add(new Adventurer(engine));
     this.add(new Platform(engine, 400, 800));
-    this.add(new Platform(engine, 700, 700));
+    this.add(new Platform(engine, 700, 650));
   }
 }
