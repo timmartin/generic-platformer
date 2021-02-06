@@ -1,6 +1,6 @@
 import * as ex from "excalibur";
 
-import { Resources } from "../resources";
+import { playerFrontSprite, playerJumpSprite } from "../resources";
 
 export class Adventurer extends ex.Actor {
   private onFloor: boolean = false;
@@ -23,13 +23,23 @@ export class Adventurer extends ex.Actor {
       this.onFloor = false;
     });
 
-    this.addDrawing(Resources.playerFront);
+    this.addDrawing("still", playerFrontSprite);
+    this.addDrawing("jump", playerJumpSprite);
+  }
+
+  public onInitialize(engine: ex.Engine): void {
+    this.setDrawing("still");
   }
 
   public update(engine: ex.Engine, delta: number) {
-    if (this.onFloor && engine.input.keyboard.isHeld(ex.Input.Keys.Space)) {
-      this.vel = new ex.Vector(this.vel.x, -400);
-      this.acc = new ex.Vector(this.acc.x, 400);
+    if (this.onFloor) {
+      if (engine.input.keyboard.isHeld(ex.Input.Keys.Space)) {
+        this.vel = new ex.Vector(this.vel.x, -400);
+        this.acc = new ex.Vector(this.acc.x, 400);
+        this.setDrawing("jump");
+      } else {
+        this.setDrawing("still");
+      }
     }
 
     if (engine.input.keyboard.isHeld(ex.Input.Keys.Left)) {
