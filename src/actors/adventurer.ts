@@ -9,7 +9,6 @@ export class Adventurer extends ex.Actor {
     super({
       x: engine.drawWidth / 2,
       y: engine.drawHeight / 2,
-      color: ex.Color.Violet,
       width: 66,
       height: 92,
       collisionType: ex.CollisionType.Active,
