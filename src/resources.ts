@@ -15,7 +15,8 @@ export const Resources = {
 };
 
 export const playerFrontSprite = Resources.playerFront.asSprite();
-export const playerJumpSprite = Resources.playerJump.asSprite();
+export const playerJumpRightSprite = new ex.Sprite({image: Resources.playerJump});
+export const playerJumpLeftSprite = new ex.Sprite({image: Resources.playerJump, flipHorizontal: true});
 export const grassLeftSprite = Resources.grassLeft.asSprite();
 export const grassMidSprite = Resources.grassMid.asSprite();
 export const grassRightSprite = Resources.grassRight.asSprite();
