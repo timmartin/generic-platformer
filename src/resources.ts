@@ -12,10 +12,13 @@ export const Resources = {
   grassRight: new ex.Texture(grassRightImage),
 };
 
-const playerSpritesheet = new ex.SpriteSheet(Resources.playerSheet, 7, 3, 73, 97);
-export const playerFrontSprite = playerSpritesheet.getSprite(14);
-export const playerJumpRightSprite = playerSpritesheet.getSprite(2);
-export const playerJumpLeftSprite = playerSpritesheet.getSprite(2);
+export const playerSpritesheet = new ex.SpriteSheet(Resources.playerSheet, 4, 4, 72, 97);
+export const playerFrontSprite = playerSpritesheet.getSprite(1);
+
+export const playerJumpRightSprite = playerSpritesheet.getSprite(3);
+export const playerJumpLeftSprite = playerSpritesheet.getSprite(3).clone();
+playerJumpLeftSprite.flipHorizontal= true;
+
 export const grassLeftSprite = Resources.grassLeft.asSprite();
 export const grassMidSprite = Resources.grassMid.asSprite();
 export const grassRightSprite = Resources.grassRight.asSprite();

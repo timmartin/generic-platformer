@@ -31,3 +31,40 @@ to the same sprite.
 It's easy enough to choose which sprite to use and call `setDrawable` appropriately
 based on player movement,
 [as you can see here](https://github.com/timmartin/generic-platformer/commit/2547c3b54b4b38747acff216c26623e6e327bca8).
+
+This wasn't quite enough though, because I want some animation. You can create an
+animation from a series of images, but it's better to load a single `Spritesheet`
+with all the frames of the animation in it, so that's what I did.
+
+Or tried to do, at any rate. The free art assets I'm using are set up for animation
+with a sprite sheet, but it's done in a compact way where the images are packed as
+closely as possible. Excalibur wants to load images from the sprite sheet in a
+regular grid.
+
+The best way I found to rearrange the images into a regular grid was to split them off by
+using imagemagick crop:
+
+```
+$ convert player_spritesheet.png -crop 69x91+365+98 +repage -out duck.png
+```
+
+Here the exact offsets in the image are taken from the text file accompanying the
+sprite sheet.
+
+I could then pack these images into a sheet using the imagemagick `montage` command,
+but in order to lay them out right I had to first resize them all to the same size:
+
+```
+$ convert -extent 72x97 -gravity south -background none front.png front_resized.png
+```
+
+Delete the old files and rename the new resized files, then I could paste them
+together with:
+
+```
+$ montage duck.png front.png hurt.png jump.png stand.png walk01.png walk02.png \
+    walk03.png walk04.png walk05.png walk06.png walk07.png walk08.png walk09.png \
+    walk10.png walk11.png -geometry +0+0 -background none output.png
+```
+
+This generates a spritesheet on a regular grid, which can be used in Excalibur.
