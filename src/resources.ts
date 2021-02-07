@@ -1,22 +1,21 @@
-import playerFront from "./assets/player_front.png";
-import playerJump from "./assets/player_jump.png";
-import grassLeft from "./assets/grass_cliff_left.png";
-import grassMid from "./assets/grass_mid.png";
-import grassRight from "./assets/grass_cliff_right.png";
+import playerSpritesheetImage from "./assets/player_spritesheet.png";
+import grassLeftImage from "./assets/grass_cliff_left.png";
+import grassMidImage from "./assets/grass_mid.png";
+import grassRightImage from "./assets/grass_cliff_right.png";
 
 import * as ex from "excalibur";
 
 export const Resources = {
-  playerFront: new ex.Texture(playerFront),
-  playerJump: new ex.Texture(playerJump),
-  grassLeft: new ex.Texture(grassLeft),
-  grassMid: new ex.Texture(grassMid),
-  grassRight: new ex.Texture(grassRight),
+  playerSheet: new ex.Texture(playerSpritesheetImage),
+  grassLeft: new ex.Texture(grassLeftImage),
+  grassMid: new ex.Texture(grassMidImage),
+  grassRight: new ex.Texture(grassRightImage),
 };
 
-export const playerFrontSprite = Resources.playerFront.asSprite();
-export const playerJumpRightSprite = new ex.Sprite({image: Resources.playerJump});
-export const playerJumpLeftSprite = new ex.Sprite({image: Resources.playerJump, flipHorizontal: true});
+const playerSpritesheet = new ex.SpriteSheet(Resources.playerSheet, 7, 3, 73, 97);
+export const playerFrontSprite = playerSpritesheet.getSprite(14);
+export const playerJumpRightSprite = playerSpritesheet.getSprite(2);
+export const playerJumpLeftSprite = playerSpritesheet.getSprite(2);
 export const grassLeftSprite = Resources.grassLeft.asSprite();
 export const grassMidSprite = Resources.grassMid.asSprite();
 export const grassRightSprite = Resources.grassRight.asSprite();
