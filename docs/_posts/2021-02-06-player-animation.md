@@ -68,3 +68,57 @@ $ montage duck.png front.png hurt.png jump.png stand.png walk01.png walk02.png \
 ```
 
 This generates a spritesheet on a regular grid, which can be used in Excalibur.
+It's then easy enough to load this spritesheet and select out the frames that are
+used for the walking animation:
+
+```typescript
+    this.walkingAnimationLeft = playerSpritesheet.getAnimationByIndices(
+      engine,
+      [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+      50
+    );
+    this.walkingAnimationLeft.flipHorizontal = true;
+```
+
+There was another problem, though. My first attempt at setting the animation had a bunch
+of logic like this:
+
+```typescript
+    if (engine.input.keyboard.isHeld(ex.Input.Keys.Left)) {
+      if (this.onFloor) {
+        // ...accelerate left quickly because feet are on the floor...
+
+        this.setDrawing("walk-left");
+      } else {
+        //... accelerate left more slowly because we're floating ...
+
+        this.setDrawing("jump-left");
+      }
+    }
+```
+
+This works fine when the drawings are fixed images, but when using an animation this
+has the side-effect that it resets the animation on every frame, so the graphic never
+animates.
+
+I was able to work around this using the `wasPressed` function:
+
+```typescript
+    if (engine.input.keyboard.isHeld(ex.Input.Keys.Left)) {
+      if (this.onFloor) {
+        //...
+        if (engine.input.keyboard.wasPressed(ex.Input.Keys.Left)) {
+          this.setDrawing("walk-left");
+        }
+      } else {
+        //...
+        this.setDrawing("jump-left");
+      }
+    }
+```
+
+but this was pretty hard to maintain, because the decision about how to set the
+animation is too closely tied to the keyboard handling logic. Instead, I
+[introduced an abstraction](https://github.com/timmartin/generic-platformer/commit/0020c01759d41fa086383ada22fd20969717067e)
+where the state is recalculated on each frame, but the old state is kept
+and the drawing is only changed if the new state is different from the old state.
