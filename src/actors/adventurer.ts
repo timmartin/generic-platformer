@@ -7,11 +7,16 @@ import {
   playerSpritesheet,
 } from "../resources";
 
+type Activity = "standing" | "jumping_left" | "jumping_right" | "walking_left" | "walking_right";
+
 export class Adventurer extends ex.Actor {
   private onFloor: boolean = false;
 
   private walkingAnimationRight: ex.Animation;
   private walkingAnimationLeft: ex.Animation;
+
+  private previousActivity: Activity = "standing";
+  private currentActivity: Activity = "standing";
 
   constructor(engine: ex.Engine) {
     super({
@@ -26,9 +31,11 @@ export class Adventurer extends ex.Actor {
     this.body.collider.on("collisionstart", () => {
       this.onFloor = true;
       if (engine.input.keyboard.isHeld(ex.Input.Keys.Left)) {
-        this.setDrawing("walk-left");
+        this.currentActivity = "walking_left";
       } else if (engine.input.keyboard.isHeld(ex.Input.Keys.Right)) {
-        this.setDrawing("walk-right");
+        this.currentActivity = "walking_right";
+      } else {
+        this.currentActivity = "standing";
       }
     });
 
@@ -60,46 +67,65 @@ export class Adventurer extends ex.Actor {
     this.setDrawing("jump-right");
   }
 
+  public onPreUpdate(engine: ex.Engine, delta: number) {
+    this.previousActivity = this.currentActivity;
+  }
+
   public update(engine: ex.Engine, delta: number) {
     if (this.onFloor) {
       if (engine.input.keyboard.isHeld(ex.Input.Keys.Space)) {
         this.vel = new ex.Vector(this.vel.x, -400);
         this.acc = new ex.Vector(this.acc.x, 400);
-      } else if (
-        !engine.input.keyboard.isHeld(ex.Input.Keys.Left) &&
-        !engine.input.keyboard.isHeld(ex.Input.Keys.Right)
-      ) {
-        this.setDrawing("still");
+        if (this.vel.x < 0) {
+          this.currentActivity = "jumping_left";
+        } else {
+          this.currentActivity = "jumping_right";
+        }
+      }
+    } else {
+      if (this.vel.x > 0) {
+        this.currentActivity = "jumping_right";
+      } else {
+        this.currentActivity = "jumping_left";
       }
     }
 
     if (engine.input.keyboard.isHeld(ex.Input.Keys.Left)) {
       if (this.onFloor) {
         this.acc = new ex.Vector(-1000, this.acc.y);
-        if (engine.input.keyboard.wasPressed(ex.Input.Keys.Left)) {
-          this.setDrawing("walk-left");
-        }
+        this.currentActivity = "walking_left";
       } else {
         this.acc = new ex.Vector(-200, this.acc.y);
-        this.setDrawing("jump-left");
       }
     } else if (engine.input.keyboard.isHeld(ex.Input.Keys.Right)) {
       if (this.onFloor) {
         this.acc = new ex.Vector(1000, this.acc.y);
-        if (engine.input.keyboard.wasPressed(ex.Input.Keys.Right)) {
-          this.setDrawing("walk-right");
-        }
+        this.currentActivity = "walking_right";
       } else {
         this.acc = new ex.Vector(200, this.acc.y);
-        this.setDrawing("jump-right");
       }
     } else if (this.onFloor) {
       this.acc.x = 0;
       this.vel.x = 0;
+      this.currentActivity = "standing";
     }
 
     this.vel.x = Math.min(200, this.vel.x);
     this.vel.x = Math.max(-200, this.vel.x);
+
+    if (this.currentActivity != this.previousActivity) {
+      if (this.currentActivity === "standing") {
+        this.setDrawing("still");
+      } else if (this.currentActivity === "walking_left") {
+        this.setDrawing("walk-left");
+      } else if (this.currentActivity === "walking_right") {
+        this.setDrawing("walk-right");
+      } else if (this.currentActivity === "jumping_left") {
+        this.setDrawing("jump-left");
+      } else if (this.currentActivity === "jumping_right") {
+        this.setDrawing("jump-right");
+      }
+    }
 
     return super.update(engine, delta);
   }
