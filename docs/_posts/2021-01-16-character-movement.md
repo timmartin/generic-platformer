@@ -43,7 +43,7 @@ fast, and that we should cap the terminal velocity. But it turns out that within
 that the player can fall on one screen, it doesn't really become a problem. I can revisit
 that decision if I end up with the screen scrolling vertically.
 
-But immediately this as actually involved a big decision: to model acceleration under gravity
+But immediately this has actually involved a big decision: to model acceleration under gravity
 realistically. This wasn't what I had in mind when I opened my code editor to write a
 simple platform game, but Excalibur made it so easy to do that it's what I ended up doing.
 
