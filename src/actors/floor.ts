@@ -6,13 +6,13 @@ import { grassCenterSprite, grassMidSprite } from "../resources";
 // because it's assumed that it's placed such that the player can never reach
 // past the edge of the floor.
 export class Floor extends ex.Actor {
-  constructor(engine: ex.Engine) {
+  constructor(engine: ex.Engine, width: number) {
     const thickness = 20;
 
     super({
-      x: engine.drawWidth / 2,
+      x: width / 2,
       y: engine.drawHeight - thickness,
-      width: engine.drawWidth,
+      width: width,
       height: thickness,
       collisionType: ex.CollisionType.Fixed,
     });

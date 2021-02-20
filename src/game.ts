@@ -7,11 +7,14 @@ export class Game extends ex.Scene {
   public onInitialize(engine: ex.Engine) {
     const adventurer = new Adventurer(engine);
 
+    const width = engine.drawWidth * 1.1;
+
     this.add(adventurer);
-    this.add(new Floor(engine));
+    this.add(new Floor(engine, width));
     this.add(new Platform(engine, 400, 800));
     this.add(new Platform(engine, 700, 650));
 
     this.camera.strategy.radiusAroundActor(adventurer, 200);
+    this.camera.strategy.limitCameraBounds(new ex.BoundingBox(0, 0, width, engine.drawHeight + 100));
   }
 }
