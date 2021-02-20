@@ -36,7 +36,7 @@ export class Adventurer extends ex.Actor {
     });
 
     this.on("precollision", (e: ex.PreCollisionEvent) => {
-      if (e.intersection.y != 0) {
+      if (e.intersection.y < 0) {
         this.currentFloor = e.other;
       }
     });
