@@ -1,6 +1,6 @@
 import * as ex from "excalibur";
 
-import { grassMidSprite } from "../resources";
+import { grassCenterSprite, grassMidSprite } from "../resources";
 
 // A Floor is similar to a Platform, but doesn't have left and right end caps,
 // because it's assumed that it's placed such that the player can never reach
@@ -26,6 +26,11 @@ export class Floor extends ex.Actor {
         ctx,
         -(this.width / 2) + i * grassMidSprite.drawWidth,
         -(this.height / 2)
+      );
+      grassCenterSprite.draw(
+        ctx,
+        -(this.width / 2) + i * grassMidSprite.drawWidth,
+        -(this.height / 2) + grassCenterSprite.drawHeight
       );
     }
   }
