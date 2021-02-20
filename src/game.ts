@@ -7,8 +7,8 @@ export class Game extends ex.Scene {
   public onInitialize(engine: ex.Engine) {
     const adventurer = new Adventurer(engine);
 
-    this.add(new Floor(engine));
     this.add(adventurer);
+    this.add(new Floor(engine));
     this.add(new Platform(engine, 400, 800));
     this.add(new Platform(engine, 700, 650));
 
