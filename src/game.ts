@@ -4,9 +4,7 @@ import { Floor } from "./actors/floor";
 import { Platform } from "./actors/platform";
 
 export class Game extends ex.Scene {
-  constructor(engine: ex.Engine) {
-    super(engine);
-
+  public onInitialize(engine: ex.Engine) {
     const adventurer = new Adventurer(engine);
 
     this.add(new Floor(engine));
