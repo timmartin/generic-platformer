@@ -7,10 +7,17 @@ import {
   playerSpritesheet,
 } from "../resources";
 
-type Activity = "standing" | "jumping_left" | "jumping_right" | "walking_left" | "walking_right";
+type Activity =
+  | "standing"
+  | "jumping_left"
+  | "jumping_right"
+  | "walking_left"
+  | "walking_right";
 
 export class Adventurer extends ex.Actor {
-  private onFloor: boolean = false;
+  // If the actor is standing on a platform that can support upward movement,
+  // this is the corresponding actor.
+  private currentFloor: ex.Actor | null = null;
 
   private walkingAnimationRight: ex.Animation;
   private walkingAnimationLeft: ex.Animation;
@@ -28,8 +35,13 @@ export class Adventurer extends ex.Actor {
       acc: new ex.Vector(0, 400),
     });
 
-    this.body.collider.on("collisionstart", () => {
-      this.onFloor = true;
+    this.on("precollision", (e: ex.PreCollisionEvent) => {
+      if (e.intersection.y != 0) {
+        this.currentFloor = e.other;
+      }
+    });
+
+    this.on("collisionstart", () => {
       if (engine.input.keyboard.isHeld(ex.Input.Keys.Left)) {
         this.currentActivity = "walking_left";
       } else if (engine.input.keyboard.isHeld(ex.Input.Keys.Right)) {
@@ -39,8 +51,10 @@ export class Adventurer extends ex.Actor {
       }
     });
 
-    this.body.collider.on("collisionend", () => {
-      this.onFloor = false;
+    this.on("collisionend", (e: ex.CollisionEndEvent) => {
+      if (e.other == this.currentFloor) {
+        this.currentFloor = null;
+      }
     });
 
     this.walkingAnimationRight = playerSpritesheet.getAnimationByIndices(
@@ -72,7 +86,7 @@ export class Adventurer extends ex.Actor {
   }
 
   public update(engine: ex.Engine, delta: number) {
-    if (this.onFloor) {
+    if (this.currentFloor) {
       if (engine.input.keyboard.isHeld(ex.Input.Keys.Space)) {
         this.vel = new ex.Vector(this.vel.x, -400);
         this.acc = new ex.Vector(this.acc.x, 400);
@@ -91,20 +105,20 @@ export class Adventurer extends ex.Actor {
     }
 
     if (engine.input.keyboard.isHeld(ex.Input.Keys.Left)) {
-      if (this.onFloor) {
+      if (this.currentFloor != null) {
         this.acc = new ex.Vector(-1000, this.acc.y);
         this.currentActivity = "walking_left";
       } else {
         this.acc = new ex.Vector(-200, this.acc.y);
       }
     } else if (engine.input.keyboard.isHeld(ex.Input.Keys.Right)) {
-      if (this.onFloor) {
+      if (this.currentFloor != null) {
         this.acc = new ex.Vector(1000, this.acc.y);
         this.currentActivity = "walking_right";
       } else {
         this.acc = new ex.Vector(200, this.acc.y);
       }
-    } else if (this.onFloor) {
+    } else if (this.currentFloor != null) {
       this.acc.x = 0;
       this.vel.x = 0;
       this.currentActivity = "standing";
