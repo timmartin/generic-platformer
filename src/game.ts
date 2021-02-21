@@ -3,6 +3,7 @@ import { Adventurer } from "./actors/adventurer";
 import { Boundary, BoundarySide } from "./actors/boundary";
 import { Floor } from "./actors/floor";
 import { Platform } from "./actors/platform";
+import { Background } from "./actors/background";
 
 export class Game extends ex.Scene {
   public onInitialize(engine: ex.Engine) {
@@ -13,6 +14,7 @@ export class Game extends ex.Scene {
 
     const floor = new Floor(width, height);
 
+    this.add(new Background(this.camera));
     this.add(adventurer);
     this.add(floor);
     this.add(new Platform(engine, 400, 850));
