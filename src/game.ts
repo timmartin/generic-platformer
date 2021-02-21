@@ -8,7 +8,7 @@ export class Game extends ex.Scene {
   public onInitialize(engine: ex.Engine) {
     const adventurer = new Adventurer(engine);
 
-    const width = engine.drawWidth * 1.1;
+    const width = 2500;
 
     this.add(adventurer);
     this.add(new Floor(engine, width));
