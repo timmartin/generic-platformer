@@ -9,4 +9,4 @@ it just doesn't look inviting.
 I went back to the [Kenney](https://kenney.nl/) assets and picked up a background sprite, which looks
 like this:
 
-![Background](../../src/assets/background.png)
+![Background](https://github.com/timmartin/generic-platformer/raw/v0.1.1/src/assets/background.png)
