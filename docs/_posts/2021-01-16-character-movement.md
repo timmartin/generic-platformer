@@ -9,7 +9,7 @@ to write games that are original and interesting, but got bogged down immediatel
 problems that I didn't foresee. This time I've deliberately gone for something as
 simple as possible, and even so I've ended up having to think a little.
 
-As Bob Ross says, "now, it's time to make make some big decisions".
+As Bob Ross says, "now, it's time to make some big decisions".
 
 In the case of a platformer, even one that's deliberately setting out to be ultimately
 generic, there are some big decisions to make straight out of the gate that have a
