@@ -4,7 +4,7 @@ import { Game } from "./game";
 import { Resources } from "./resources";
 
 const engine = new ex.Engine({
-  backgroundColor: ex.Color.Black,
+  backgroundColor: new ex.Color(207, 239, 252),
 });
 
 const loader = new ex.Loader();
