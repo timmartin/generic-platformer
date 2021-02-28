@@ -35,4 +35,3 @@ export const grassRightSprite = Resources.grassRight.asSprite();
 export const grassCenterSprite = Resources.grassCenter.asSprite();
 
 export const backgroundSprite = Resources.background.asSprite();
-backgroundSprite.scale.setTo(1.5, 1.5);

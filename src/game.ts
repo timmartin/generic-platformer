@@ -15,6 +15,8 @@ export class Game extends ex.Scene {
     const floor = new Floor(width, height);
 
     this.add(new Background(this.camera));
+    this.add(new Background(this.camera, new ex.Vector(1024, 0)));
+    this.add(new Background(this.camera, new ex.Vector(1024 * 2, 0)));
     this.add(adventurer);
     this.add(floor);
     this.add(new Platform(engine, 400, 850));
@@ -23,6 +25,8 @@ export class Game extends ex.Scene {
     this.add(new Boundary(engine, width, BoundarySide.Right));
 
     this.camera.strategy.radiusAroundActor(adventurer, 200);
-    this.camera.strategy.limitCameraBounds(new ex.BoundingBox(0, 0, width, height + floor.thickness));
+    this.camera.strategy.limitCameraBounds(
+      new ex.BoundingBox(0, 0, width, height + floor.thickness)
+    );
   }
 }
