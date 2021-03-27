@@ -4,6 +4,7 @@ import { Boundary, BoundarySide } from "./actors/boundary";
 import { Floor } from "./actors/floor";
 import { Platform } from "./actors/platform";
 import { Background } from "./actors/background";
+import { Score } from "./actors/score";
 
 export class Game extends ex.Scene {
   public onInitialize(engine: ex.Engine) {
@@ -13,6 +14,8 @@ export class Game extends ex.Scene {
     const height = 1000;
 
     const floor = new Floor(width, height);
+
+    this.add(new Score());
 
     this.add(new Background(this.camera));
     this.add(new Background(this.camera, new ex.Vector(1024, 0)));
