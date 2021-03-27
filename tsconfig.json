@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "target": "es6",
+    "module": "commonjs",
+    "noResolve": false,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": ["es6", "DOM"]
+  },
+
+  "exclude": ["node_modules"]
+}
