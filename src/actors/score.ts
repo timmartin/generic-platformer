@@ -15,8 +15,6 @@ export class Score extends ex.ScreenElement {
   }
 
   onPostDraw(ctx: CanvasRenderingContext2D) {
-    const score = 42;
-
     hudSprites.coins.draw(ctx, 0, 0);
     this.drawScoreDigits(ctx, this.gameState.score);
   }
