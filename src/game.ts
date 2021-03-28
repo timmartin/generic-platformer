@@ -24,7 +24,7 @@ export class Game extends ex.Scene implements GameState {
 
     const floor = new Floor(width, height);
 
-    this.add(new Score(this));
+    this.add(new Score(engine, this));
 
     this.add(new Background(this.camera));
     this.add(new Background(this.camera, new ex.Vector(1024, 0)));
