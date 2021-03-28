@@ -22,13 +22,20 @@ export class Score extends ex.ScreenElement {
   private drawScoreDigits(ctx: CanvasRenderingContext2D, score: number) {
     const digits = score.toString();
 
-    let offset = hudSprites.coins.drawWidth;
+    let xOffset = hudSprites.coins.drawWidth + 5;
 
     for (const digit of digits) {
       const digitNum = Number.parseInt(digit, 10);
-      hudSprites.numbers[digitNum].draw(ctx, offset, 0);
 
-      offset += hudSprites.numbers[digitNum].drawWidth;
+      // Line the center line of the digit with the center line
+      // of the coin graphic.
+      const yOffset =
+        hudSprites.coins.drawHeight / 2 -
+        hudSprites.numbers[digitNum].drawHeight / 2;
+
+      hudSprites.numbers[digitNum].draw(ctx, xOffset, yOffset);
+
+      xOffset += hudSprites.numbers[digitNum].drawWidth;
     }
   }
 }
