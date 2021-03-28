@@ -5,6 +5,7 @@ import { Floor } from "./actors/floor";
 import { Platform } from "./actors/platform";
 import { Background } from "./actors/background";
 import { Score } from "./actors/score";
+import { Coin } from "./actors/coin";
 
 export interface GameState {
   score: number;
@@ -30,6 +31,7 @@ export class Game extends ex.Scene implements GameState {
     this.add(floor);
     this.add(new Platform(engine, 400, 850));
     this.add(new Platform(engine, 700, 690));
+    this.add(new Coin(720, 640));
     this.add(new Boundary(engine, 0, BoundarySide.Left));
     this.add(new Boundary(engine, width, BoundarySide.Right));
 

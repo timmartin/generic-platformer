@@ -60,6 +60,8 @@ export const grassCenterSprite = Resources.grassCenter.asSprite();
 
 export const backgroundSprite = Resources.background.asSprite();
 
+export const coinSprite = Resources.coin.asSprite();
+
 export const hudSprites = {
   coins: Resources.hudCoins.asSprite(),
   numbers: [
