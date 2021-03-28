@@ -6,7 +6,13 @@ import { Platform } from "./actors/platform";
 import { Background } from "./actors/background";
 import { Score } from "./actors/score";
 
-export class Game extends ex.Scene {
+export interface GameState {
+  score: number;
+}
+
+export class Game extends ex.Scene implements GameState {
+  public score = 0;
+
   public onInitialize(engine: ex.Engine) {
     const adventurer = new Adventurer(engine);
 
@@ -15,7 +21,7 @@ export class Game extends ex.Scene {
 
     const floor = new Floor(width, height);
 
-    this.add(new Score());
+    this.add(new Score(this));
 
     this.add(new Background(this.camera));
     this.add(new Background(this.camera, new ex.Vector(1024, 0)));
